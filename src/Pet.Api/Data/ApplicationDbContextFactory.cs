@@ -12,7 +12,7 @@ namespace Pet.Api.Data
             // Build configuration
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.Development.json")
                 .Build();
 
             // Create DbContextOptionsBuilder

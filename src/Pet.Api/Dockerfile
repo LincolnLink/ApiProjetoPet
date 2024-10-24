@@ -27,7 +27,12 @@ RUN dotnet publish "./Pet.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p
 # RUN update-ca-certificates
 
 # Defina a variável de ambiente ASPNETCORE_ENVIRONMENT
-# ENV ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_ENVIRONMENT=Development
+
+
+# Defina variáveis de ambiente específicas para ConnectionStrings, se necessário
+ENV ConnectionStrings__DefaultConnection="Server=LINCOLN;Database=DbPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+
 
 FROM base AS final
 WORKDIR /app

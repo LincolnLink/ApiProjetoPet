@@ -29,8 +29,9 @@ namespace Pet.Api
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+            app.UseApiConfig();
 
+            app.UseAuthorization();
 
             app.MapControllers();
 
