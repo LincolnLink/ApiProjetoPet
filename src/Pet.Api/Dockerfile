@@ -31,7 +31,7 @@ ENV ASPNETCORE_ENVIRONMENT=Development
 
 
 # Defina variáveis de ambiente específicas para ConnectionStrings, se necessário
-ENV ConnectionStrings__DefaultConnection="Server=LINCOLN;Database=DbPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+ENV ConnectionStrings__DefaultConnection="Server=DESKTOP-8TA92CI;Database=DbPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
 
 
 FROM base AS final
