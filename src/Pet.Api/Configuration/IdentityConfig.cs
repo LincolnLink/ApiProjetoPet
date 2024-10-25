@@ -28,7 +28,7 @@ namespace Pet.Api.Configuration
 
             // JWT
             // Congifura a classe com o json, já está populando a classe.
-            var appSettingsSection = configuration.GetSection("AppSettings");
+            var appSettingsSection = configuration.GetSection("AppSettings.Development");
             services.Configure<AppSettings>(appSettingsSection);
 
             // Pegando os dados da classe "AppSettings".
