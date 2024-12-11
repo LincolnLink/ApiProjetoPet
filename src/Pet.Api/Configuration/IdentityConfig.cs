@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Pet.Api.Configuration
 {
-    public static class  IdentityConfig
+    public static class IdentityConfig
     {
         public static IServiceCollection AddIdentityConfig(this IServiceCollection services, IConfiguration configuration)
         {
