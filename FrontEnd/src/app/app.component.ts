@@ -6,6 +6,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 
+import { FooterComponent } from './Component/footer/footer.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -13,13 +15,15 @@ import { FormsModule } from '@angular/forms';
     RouterOutlet,
     RouterLinkActive,
     RouterLink,
+    MatButtonModule,
     MatToolbarModule,
     MatIconModule,
     MatSidenavModule,    
-    FormsModule
+    FormsModule,
+    FooterComponent
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: 'app.component.css'
 })
 export class AppComponent {
   title = 'FrontEnd';
