@@ -1,0 +1,38 @@
+
+<mat-toolbar class="mat-toolbar" color="primary">
+  <button mat-icon-button (click)="sidenav.toggle()" id="menuIcon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span id="menuTitle">App Component</span>    
+  
+  <a mat-button [routerLink]="['/cadastro-produto']" class="top-menu-item">Cadastro Produtos</a>
+  <a mat-button [routerLink]="['/lista-produto']" class="top-menu-item">Lista Produtos</a>
+  
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <!--opened significa que vai ficar sempre abberto-->
+  <!--fixedInViewport: preenche todo o conteudo da tela-->
+  <!--mode: side: empurra o conteudo-->
+  <!--mode: over: sobreponhe o conteudo-->
+  <app-menu-user></app-menu-user>
+  <mat-sidenav #sidenav [fixedInViewport]="true" [fixedTopGap]="60" mode="side">
+     <div class="side-nav-items">
+      <div>
+          <a (click)="sidenav.close()" mat-button [routerLink]="['/cadastro-produto']" class="side-menu-item"><mat-icon>home</mat-icon> Cadastro Produtos </a>
+      </div>
+      <div>
+          <a (click)="sidenav.close()" mat-button [routerLink]="['/lista-produto']" class="side-menu-item"><mat-icon>people</mat-icon> Lista Produtos </a>
+      </div>
+     </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+      <div class="main-content">
+          <router-outlet></router-outlet>
+      </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<app-footer></app-footer>

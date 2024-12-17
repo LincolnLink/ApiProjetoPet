@@ -1,0 +1,60 @@
+<main role="main" class="pb-3" style="display: flex; flex-direction: column; align-items: center;">
+
+    <h1>Lista de Produtos</h1>
+    <hr style="width: 100%; max-width: 800px;">
+  
+    <p>
+      <button mat-raised-button color="primary" [routerLink]="['/cadastro-produto']">Novo Produto</button>
+    </p>
+  
+    <mat-table [dataSource]="produtos" class="mat-elevation-z8" style="width: 100%; max-width: 800px;">
+      <!-- Imagem -->
+      <ng-container matColumnDef="imagem">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let produto">
+          <img [src]="'assets/' + produto.imagem" [alt]="produto.nome" style="width: 70px; height: 100px;">
+        </mat-cell>
+      </ng-container>
+  
+      <!-- Nome -->
+      <ng-container matColumnDef="nome">
+        <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+        <mat-cell *matCellDef="let produto"> {{ produto.nome }} </mat-cell>
+      </ng-container>
+  
+      <!-- Fornecedor -->
+      <ng-container matColumnDef="nomeFornecedor">
+        <mat-header-cell *matHeaderCellDef> Fornecedor </mat-header-cell>
+        <mat-cell *matCellDef="let produto"> {{ produto.nomeFornecedor }} </mat-cell>
+      </ng-container>
+  
+      <!-- Valor -->
+      <ng-container matColumnDef="valor">
+        <mat-header-cell *matHeaderCellDef> Valor </mat-header-cell>
+        <mat-cell *matCellDef="let produto"> {{ produto.valor | currency: 'BRL':'symbol':'1.2-2' }} </mat-cell>
+      </ng-container>
+  
+      <!-- Ativo -->
+      <ng-container matColumnDef="ativo">
+        <mat-header-cell *matHeaderCellDef> Ativo? </mat-header-cell>
+        <mat-cell *matCellDef="let produto">
+          <mat-checkbox [checked]="produto.ativo"></mat-checkbox>
+        </mat-cell>
+      </ng-container>
+  
+      <!-- Ações -->
+      <ng-container matColumnDef="acoes">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let produto" style="text-align: right;">
+          <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="accent"><mat-icon>delete</mat-icon></button>
+          <button mat-icon-button><mat-icon>visibility</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+  </main>
+  

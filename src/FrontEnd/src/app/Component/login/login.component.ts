@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 import { User } from '../../Module/user';
 import { UserService } from '../../Service/userService';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +16,12 @@ import { CommonModule } from '@angular/common';
   imports: [    
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule,    
+    HttpClientModule,
+    MatCardModule, 
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatButtonModule, 
+       
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'

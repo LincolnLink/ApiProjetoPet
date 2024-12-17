@@ -9,7 +9,7 @@ export abstract class BaseService {
     //protected UrlServiceV1: string = "https://devioapi.azurewebsites.net/api/v1/";
 
     //Pega o token com o medodo obterTokenUsuario que está em userService.
-    protected ObterHeaderFormData(token: string = "") {
+    protected ObterHeaderFormData(token: string) {
         return {
             headers: new HttpHeaders({
                 'Content-Disposition': 'form-data; name="produto"',

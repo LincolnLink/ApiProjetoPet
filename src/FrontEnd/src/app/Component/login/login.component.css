@@ -1,0 +1,37 @@
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  button {
+    width: 100%;
+  }
+  
+/* Centralizando o conteúdo */
+.row.justify-content-center {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* height: 100vh; Altura total da tela */
+  }
+  
+  /* Estilo para o card de login */
+  mat-card.login-card {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Estilo adicional para o botão */
+  button.login-button {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  /* Ajustando a largura dos inputs */
+  mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  

@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 
 import { FooterComponent } from './Component/footer/footer.component';
+import { MenuUserComponent } from './Component/menu-user/menu-user.component';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +21,8 @@ import { FooterComponent } from './Component/footer/footer.component';
     MatIconModule,
     MatSidenavModule,    
     FormsModule,
-    FooterComponent
+    FooterComponent,
+    MenuUserComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: 'app.component.css'

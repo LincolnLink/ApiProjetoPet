@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  pet.api:
+    image: ${DOCKER_REGISTRY-}petapi
+    build:
+      context: .
+      dockerfile: src/Pet.Api/Dockerfile
