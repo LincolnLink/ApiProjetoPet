@@ -17,6 +17,8 @@ namespace Pet.Api
             builder.Services.AddSwaggerGen();
             builder.Services.ResolveDependencies();
 
+            builder.Services.AddIdentityConfig(builder.Configuration);
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -25,8 +27,6 @@ namespace Pet.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-            builder.Services.AddIdentityConfig(builder.Configuration);
 
             app.UseHttpsRedirection();
 
