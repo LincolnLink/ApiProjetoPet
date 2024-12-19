@@ -9,12 +9,23 @@ namespace Pet.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            var environment = builder.Environment.EnvironmentName;
+            builder.Configuration
+                .SetBasePath(builder.Environment.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
 
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Configuration.AddUserSecrets<Program>();
+            }
+
+            // Add services to the container.
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            //builder.Services.AddSwaggerGen();
             builder.Services.ResolveDependencies();
 
             builder.Services.AddIdentityConfig(builder.Configuration);
@@ -31,6 +42,8 @@ namespace Pet.Api
             app.UseHttpsRedirection();
 
             app.UseApiConfig();
+
+            //app.AddSwaggerConfig();
 
             app.UseAuthorization();
 

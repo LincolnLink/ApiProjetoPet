@@ -1,6 +1,8 @@
 
 # Usa a imagem do Node.js com Angular CLI pré-instalado
 FROM node:22.12.0
+# Instala o Angular CLI globalmente
+RUN npm install -g @angular/cli
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
 # Copia os arquivos de dependências
