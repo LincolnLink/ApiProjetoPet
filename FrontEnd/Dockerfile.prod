@@ -1,0 +1,28 @@
+# Etapa 1: Build da aplicação Angular
+FROM node:22.12.0 AS build
+WORKDIR /app
+
+# Copia e instala as dependências
+COPY package*.json ./
+RUN npm install
+
+# Copia o restante do projeto
+COPY . .
+
+# Faz o build otimizado
+RUN npm run build --prod
+
+# Etapa 2: Servir os arquivos usando Nginx
+FROM nginx:alpine
+
+# Copia os arquivos gerados pelo build para a pasta padrão do Nginx
+COPY --from=build /app/dist/front-end/usr/share/nginx/html
+
+# Expõe a porta padrão do Nginx
+EXPOSE 80
+
+# Comando padrão do Nginx
+CMD ["nginx", "-g", "daemon off;"]
+
+# Comando que roda o projeto: docker-compose up pet.api pet.frontend.prod
+

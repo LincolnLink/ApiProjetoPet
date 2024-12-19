@@ -6,3 +6,25 @@ services:
     build:
       context: .
       dockerfile: src/Pet.Api/Dockerfile
+    networks:
+      - pet-network
+
+  pet.frontend.dev:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile.dev
+    networks:
+      - pet-network
+
+  pet.frontend.prod:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile.prod
+    ports:
+      - "80:80"
+    networks:
+      - pet-network
+
+networks:
+  pet-network:
+    driver: bridge
