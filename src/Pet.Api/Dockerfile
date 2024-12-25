@@ -4,8 +4,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 RUN id -u app &>/dev/null || useradd -m app
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 5000
+EXPOSE 5001
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
@@ -32,7 +32,7 @@ ENV ASPNETCORE_ENVIRONMENT=Development
 
 
 # Defina variáveis de ambiente específicas para ConnectionStrings, se necessário
-ENV ConnectionStrings__DefaultConnection="Server=DESKTOP-8TA92CI;Database=DbPet;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True"
+ENV ConnectionStrings__DefaultConnection="Server=host.docker.internal,1433;Database=DbPet;User Id=docker_user;Password=123456;MultipleActiveResultSets=true;TrustServerCertificate=True"
 
 
 FROM base AS final

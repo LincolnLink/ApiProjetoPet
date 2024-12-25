@@ -13,7 +13,7 @@ using System.Text;
 
 namespace Pet.Api.V1.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}")]//[Route("api")]
     [ApiController]
     public class AuthController : MainController
     {

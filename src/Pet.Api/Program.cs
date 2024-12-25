@@ -1,5 +1,8 @@
 
 using Pet.Api.Configuration;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
 
 namespace Pet.Api
 {
@@ -8,6 +11,8 @@ namespace Pet.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.WebHost.UseUrls("http://0.0.0.0:5000", "https://0.0.0.0:5001");
 
             var environment = builder.Environment.EnvironmentName;
             builder.Configuration
@@ -21,35 +26,52 @@ namespace Pet.Api
                 builder.Configuration.AddUserSecrets<Program>();
             }
 
-            // Add services to the container.
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            //builder.Services.AddSwaggerGen();
-            builder.Services.ResolveDependencies();
-
-            builder.Services.AddIdentityConfig(builder.Configuration);
+            // Configura serviços
+            ConfigureServices(builder);
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            // Configura middlewares
+            ConfigureMiddlewares(app);
+
+            app.Run();
+        }
+
+        private static void ConfigureServices(WebApplicationBuilder builder)
+        {
+            var services = builder.Services;
+
+            //services.AddDbContext<MeuDbContext>(options =>
+            //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentityConfig(builder.Configuration);
+
+            //services.AddAutoMapper(typeof(Program));
+            services.AddApiConfig();
+            services.AddSwaggerConfig();            
+            services.ResolveDependencies();
+        }
+
+        private static void ConfigureMiddlewares(WebApplication app)
+        {
+            var env = app.Environment;
+
+            if (env.IsDevelopment())
             {
+                app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            else
+            {
+                app.UseHsts();
+            }
 
             app.UseHttpsRedirection();
-
             app.UseApiConfig();
-
-            //app.AddSwaggerConfig();
-
+            app.UseRouting();
             app.UseAuthorization();
-
             app.MapControllers();
-
-            app.Run();
         }
     }
 }

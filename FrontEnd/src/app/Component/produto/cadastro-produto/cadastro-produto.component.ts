@@ -13,10 +13,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
-import { ProdutoService } from '../../Service/produtoService';
-import { UserService } from '../../Service/userService';
-import { Fornecedor } from '../../Interface/fornecedor';
-import { Produto } from '../../Module/produto';
+import { ProdutoService } from '../../../Service/produtoService';
+import { UserService } from '../../../Service/userService';
+import { Fornecedor } from '../../../Interface/fornecedor';
+import { Produto } from '../../../Module/produto';
 
 @Component({
   selector: 'app-cadastro-produto',
