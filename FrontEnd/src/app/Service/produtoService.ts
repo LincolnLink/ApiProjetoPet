@@ -6,7 +6,7 @@ import { catchError, map } from "rxjs/operators";
 import { Produto } from '../Module/produto';
 import { BaseService } from './baseService';
 import { Fornecedor } from '../Interface/fornecedor';
-import { UserService } from './userService';
+import { LoginService } from './loginService';
 
 @Injectable({
     providedIn: 'root',
@@ -14,7 +14,7 @@ import { UserService } from './userService';
 export class ProdutoService extends BaseService {
     constructor(
         private http: HttpClient,
-        private userService: UserService,
+        private userService: LoginService,
     ) { super() }
 
     obterTodos(): Observable<Produto[]> {

@@ -13,6 +13,7 @@ services:
       - pet-network
 
   pet.frontend.dev:
+    image: petfront
     build:
       context: ./FrontEnd
       dockerfile: Dockerfile.dev

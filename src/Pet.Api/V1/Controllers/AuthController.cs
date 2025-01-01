@@ -50,16 +50,22 @@ namespace Pet.Api.V1.Controllers
             var result = await _userManager.CreateAsync(user, registerUser.Password);
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, false);
+                var verificaMensagem =  CustomResponse();
 
+                return Ok(new
+                {
+                    success = true,
+                    message = "Usuário criado com sucesso."
+                });
 
+                //await _signInManager.SignInAsync(user, false);
                 // Gerando o token e devolve ele !
-                return CustomResponse(await GerarJwt(user.Email));
+                //return CustomResponse(await GerarJwt(user.Email));
                 //return CustomResponse(GerarJwt());
             }
             foreach (var error in result.Errors)
             {
-                NotificarErro(error.Description);
+                NotificarErro($"Erro ao criar usuário: {error.Description}");
             }
 
             return CustomResponse(registerUser);
@@ -94,56 +100,69 @@ namespace Pet.Api.V1.Controllers
         {
 
             var user = await _userManager.FindByEmailAsync(email);
-            var claims = await _userManager.GetClaimsAsync(user);
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-            // Adicionando claims do token.
-            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
-
-            // Passando as Roles para a listagem de claims
-            foreach (var userRole in userRoles)
+            if (user == null)
             {
-                claims.Add(new Claim("role", userRole));
+                throw new Exception("Usuário não encontrado");
             }
-
-            // Convertendo para "ClaimsIdentity"
-            var identityClaims = new ClaimsIdentity();
-            identityClaims.AddClaims(claims);
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
+            var claims = await _userManager.GetClaimsAsync(user);           
+            var userRoles = await _userManager.GetRolesAsync(user);
+            try
             {
-                Issuer = _appSettings.Emissor,
-                Audience = _appSettings.ValidoEm,
-                Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
-                Subject = identityClaims, // configura as Claims no token.
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 
-            });
 
-            var encodedToken = tokenHandler.WriteToken(token);
+                // Adicionando claims do token.
+                claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Id));
+                claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
+                claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
+                claims.Add(new Claim(JwtRegisteredClaimNames.Nbf, ToUnixEpochDate(DateTime.UtcNow).ToString()));
+                claims.Add(new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(DateTime.UtcNow).ToString(), ClaimValueTypes.Integer64));
 
-            // Uma forma de retorno aonde é possivel passar mais informações alem do token.
-            var response = new LoginResponseViewModel
-            {
-                AccessToken = encodedToken,
-                ExpiresIn = TimeSpan.FromHours(_appSettings.ExpiracaoHoras).TotalSeconds,
-                UserToken = new UserTokenViewModel
+                // Passando as Roles para a listagem de claims
+                foreach (var userRole in userRoles)
                 {
-                    Id = user.Id,
-                    Email = user.Email,
-                    Claims = claims.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
+                    claims.Add(new Claim("role", userRole));
                 }
-            };
 
-            return response;
+                // Convertendo para "ClaimsIdentity"
+                var identityClaims = new ClaimsIdentity();
+                identityClaims.AddClaims(claims);
 
-            //return encodedToken //forma antiga que passa só o token;
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var token = tokenHandler.CreateToken(new SecurityTokenDescriptor
+                {
+                    Issuer = _appSettings.Emissor,
+                    Audience = _appSettings.ValidoEm,
+                    Expires = DateTime.UtcNow.AddHours(_appSettings.ExpiracaoHoras),
+                    Subject = identityClaims, // configura as Claims no token.
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+
+                });
+
+                var encodedToken = tokenHandler.WriteToken(token);
+
+                // Uma forma de retorno aonde é possivel passar mais informações alem do token.
+                var response = new LoginResponseViewModel
+                {
+                    AccessToken = encodedToken,
+                    ExpiresIn = TimeSpan.FromHours(_appSettings.ExpiracaoHoras).TotalSeconds,
+                    UserToken = new UserTokenViewModel
+                    {
+                        Id = user.Id,
+                        Email = user.Email,
+                        Claims = claims.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
+                    }
+                };
+
+                return response;
+
+                //return encodedToken //forma antiga que passa só o token;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao criar token JWT");
+                throw;
+            }
         }
 
 

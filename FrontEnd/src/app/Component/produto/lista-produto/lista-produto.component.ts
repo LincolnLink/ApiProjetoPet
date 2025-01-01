@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
-
-import { ProdutoService } from '../../Service/produtoService';
-import { Produto } from '../../Module/produto';
+import { ProdutoService } from '../../../Service/produtoService';
+import { Produto } from '../../../Module/produto';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({

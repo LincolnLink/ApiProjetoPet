@@ -1,9 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterModule } from '@angular/router';
 import { User } from '../../Module/user';
-import { UserService } from '../../Service/userService';
+import { LoginService } from '../../Service/loginService';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,7 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule, 
     MatFormFieldModule, 
     MatInputModule, 
-    MatButtonModule, 
+    MatButtonModule,
+    RouterModule 
        
   ],
   templateUrl: './login.component.html',
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: UntypedFormBuilder,
     private router: Router,
-    private userService: UserService) { }
+    private loginService: LoginService) { }
 
   ngOnInit() {
     this.userForm = this.fb.group({
@@ -43,24 +44,34 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.errors = [];
     if (this.userForm.valid && this.userForm.dirty) {
       let _user = Object.assign({}, this.user, this.userForm.value);
 
-      this.userService.login(_user)
-        .subscribe(
-          result => { this.onSaveComplete(result) },
-          fail => { this.onError(fail) }
-        );
+      this.loginService.login(_user)
+        .subscribe({
+          next: (response) => {
+            this.onSaveComplete(response)
+          },
+          error: (fail) => {
+            this.onError(fail)
+          },
+        });
     }
   }
 
   onSaveComplete(response: any) {
-    this.userService.persistirUserApp(response);
+    this.loginService.persistirUserApp(response);
     this.router.navigateByUrl('/lista-produtos');
   }
 
   onError(fail: any) {
-    console.log('erro console:', fail.error);
-    this.errors = fail.error?.errors ? fail.error?.errors  : [] ;
+    if (fail.errors && fail.errors.length > 0) {
+        this.errors = fail.errors; // Lista de erros retornados pelo backend
+    } else if (fail.status === 0) {
+        this.errors = ['Não foi possível conectar ao servidor. Verifique sua conexão.'];
+    } else {
+        this.errors = ['Ocorreu um erro desconhecido.'];
+    }
   }
 }

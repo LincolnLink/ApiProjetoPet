@@ -24,6 +24,12 @@ docker ps -a
 
 docker start -a <nome-do-container>
 
+ - comando para executar backend e frontend
+
+docker-compose up pet.frontend.dev
+docker-compose up -d pet.api
+
+
 
 
 

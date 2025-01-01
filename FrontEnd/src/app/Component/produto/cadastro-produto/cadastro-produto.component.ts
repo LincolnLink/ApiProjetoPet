@@ -14,7 +14,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
 import { ProdutoService } from '../../../Service/produtoService';
-import { UserService } from '../../../Service/userService';
 import { Fornecedor } from '../../../Interface/fornecedor';
 import { Produto } from '../../../Module/produto';
 
@@ -110,10 +109,12 @@ export class CadastroProdutoComponent implements OnInit {
   }
 
   onError(fail: any) {
-    if (fail.error && fail.error.errors) {
-      this.errors = fail.error.errors;
+    if (fail.errors && fail.errors.length > 0) {
+        this.errors = fail.errors; // Lista de erros retornados pelo backend
+    } else if (fail.status === 0) {
+        this.errors = ['Não foi possível conectar ao servidor. Verifique sua conexão.'];
     } else {
-      this.errors = ['Ocorreu um erro desconhecido.'];
+        this.errors = ['Ocorreu um erro desconhecido.'];
     }
   }
 

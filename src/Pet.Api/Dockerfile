@@ -32,7 +32,7 @@ ENV ASPNETCORE_ENVIRONMENT=Development
 
 
 # Defina variáveis de ambiente específicas para ConnectionStrings, se necessário
-ENV ConnectionStrings__DefaultConnection="Server=host.docker.internal,1433;Database=DbPet;User Id=docker_user;Password=123456;MultipleActiveResultSets=true;TrustServerCertificate=True"
+ENV ConnectionStrings__DefaultConnection="Server=host.docker.internal,1433;Database=DbPet;User Id=docker_user;Password=123456789;MultipleActiveResultSets=true;TrustServerCertificate=True"
 
 
 FROM base AS final

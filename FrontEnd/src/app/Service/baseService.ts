@@ -3,7 +3,8 @@ import { throwError } from 'rxjs';
 
 export abstract class BaseService {
 
-    protected UrlServiceV1: string = "https://localhost:5001/api/v1/";
+    protected UrlServiceV1: string = "https://localhost:44376/api/v1/";
+    //protected UrlServiceV1: string = "https://localhost:5001/api/v1/";
     //protected UrlServiceV1: string = "http://localhost:36787/api/";
     //protected UrlServiceV1: string = "https://localhost:44320/api/v1/";
     //protected UrlServiceV1: string = "https://devioapi.azurewebsites.net/api/v1/";
@@ -42,17 +43,47 @@ export abstract class BaseService {
         return response.data || {};
     }
    
-    protected serviceError(error: Response | any) {
-        let errMsg: string;
-
-        if (error instanceof Response) {
-
-            errMsg = `${error.status} - ${error.statusText || ''}`;
+    protected serviceError(error: any) {
+        let customError: string[] = [];
+    
+        if (error.error) {
+            // Se o backend retornar erros no formato esperado
+            if (error.error.errors && Array.isArray(error.error.errors)) {
+                customError = error.error.errors;
+            } 
+            // Captura mensagens específicas de erro, caso não esteja no formato padrão
+            else if (typeof error.error === 'string') {
+                customError.push(error.error);
+            } 
+            // Se o backend retornar um objeto de erro
+            else if (error.error.message) {
+                customError.push(error.error.message);
+            }
         } else {
-            errMsg = error.message ? error.message : error.toString();
+            customError.push('Ocorreu um erro inesperado.');
         }
-
-        console.error(errMsg);
-        return throwError(errMsg);
+    
+        console.error('Erro no serviço:', customError);
+        // Retorna o erro em um formato consistente para o componente
+        return throwError(() => ({
+            status: error.status,
+            errors: customError
+        }));
     }
+    
+
+
+    // protected serviceError(error: Response | any) {
+    //     let errMsg: string;
+
+    //     if (error instanceof Response) {
+
+    //         errMsg = `${error.status} - ${error.statusText || ''}`;
+    //     } else {
+    //         errMsg = error.message ? error.message : error.toString();
+    //     }
+
+    //     console.error(errMsg);
+    //     return throwError(errMsg);
+    // }
 }

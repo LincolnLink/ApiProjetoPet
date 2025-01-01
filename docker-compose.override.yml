@@ -6,7 +6,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=5000
       - ASPNETCORE_HTTPS_PORTS=5001
-      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=DbPet;User Id=docker_user;Password=123456;MultipleActiveResultSets=true;TrustServerCertificate=True    
+      - ConnectionStrings__DefaultConnection=Server=host.docker.internal,1433;Database=DbPet;User Id=docker_user;Password=123456789;MultipleActiveResultSets=true;TrustServerCertificate=True    
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro

@@ -4,47 +4,24 @@ import { Observable } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { BaseService } from "./baseService";
 import { User } from "../Module/user";
-import { UserServiceInterface } from "../Interface/UserServiceInterface";
+import { UserServiceInterface } from "../Interface/loginServiceInterface";
 
 @Injectable({
     providedIn: 'root',
 })
-export class UserService extends BaseService implements UserServiceInterface {
+export class UserService extends BaseService{
     constructor(private http: HttpClient) { 
         super();
     }
 
-    isBrowser(): boolean {
-        return typeof window !== 'undefined';
-    }
-
-    login(user: User): Observable<User> {
+    register(user: User): Observable<any> {
         return this.http
-            .post(`${this.UrlServiceV1}entrar`, user, super.ObterHeaderJson())
-            .pipe(
-                map(super.extractData),
-                catchError(super.serviceError)
-        );
+          .post(`${this.UrlServiceV1}nova-conta`, user, super.ObterHeaderJson())
+          .pipe(
+            map(super.extractData),
+            catchError(super.serviceError)
+          );
     }
 
-    persistirUserApp(response: any): void {
-        if (this.isBrowser()) {
-            localStorage.setItem('app.token', response.accessToken);
-            localStorage.setItem('app.user', JSON.stringify(response.userToken));
-        }
-    }
 
-    obterTokenUsuario(): string | null{
-        if (this.isBrowser()) {
-            return localStorage.getItem('app.token');
-        }
-        return null;
-    }
-
-    obterUsuario(): any {
-        if (this.isBrowser()) {
-            return JSON.parse(localStorage.getItem('app.user') || 'null');
-        }
-        return null;
-    }
 }
