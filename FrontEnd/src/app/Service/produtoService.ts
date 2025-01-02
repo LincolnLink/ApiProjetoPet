@@ -6,7 +6,7 @@ import { catchError, map } from "rxjs/operators";
 import { Produto } from '../Module/produto';
 import { BaseService } from './baseService';
 import { Fornecedor } from '../Interface/fornecedor';
-import { LoginService } from './loginService';
+import { AuthService } from './authService';
 
 @Injectable({
     providedIn: 'root',
@@ -14,11 +14,11 @@ import { LoginService } from './loginService';
 export class ProdutoService extends BaseService {
     constructor(
         private http: HttpClient,
-        private userService: LoginService,
+        private authService: AuthService,
     ) { super() }
 
     obterTodos(): Observable<Produto[]> {
-        let token = this.userService.obterTokenUsuario();
+        let token = this.authService.obterTokenUsuario();
 
         if(token != null)
         {        
@@ -33,7 +33,7 @@ export class ProdutoService extends BaseService {
 
     registrarProdutoAlternativo(produto: FormData): Observable<Produto> {
 
-        let token = this.userService.obterTokenUsuario();
+        let token = this.authService.obterTokenUsuario();
 
         if(token != null)
         {        
@@ -51,7 +51,7 @@ export class ProdutoService extends BaseService {
 
     registrarProduto(produto: Produto): Observable<Produto> {
 
-        let token = this.userService.obterTokenUsuario();
+        let token = this.authService.obterTokenUsuario();
 
         if(token != null)
         {
@@ -68,7 +68,7 @@ export class ProdutoService extends BaseService {
 
     obterFornecedores(): Observable<Fornecedor[]> {
 
-        let token = this.userService.obterTokenUsuario();
+        let token = this.authService.obterTokenUsuario();
 
         if(token != null)
         {

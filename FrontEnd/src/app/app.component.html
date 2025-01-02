@@ -1,16 +1,22 @@
 
-<mat-toolbar class="mat-toolbar" color="primary">
-  <button mat-icon-button (click)="sidenav.toggle()" id="menuIcon" aria-label="Example icon-button with menu icon">
+<mat-toolbar *ngIf="authService.isUserAuthenticated()" class="mat-toolbar" color="primary">
+  <button *ngIf="authService.isUserAuthenticated()"
+   mat-icon-button (click)="sidenav.toggle()"
+   id="menuIcon" aria-label="Example icon-button with menu icon">
     <mat-icon>menu</mat-icon>
   </button>
-  <span id="menuTitle">App Component</span>    
+
+  <span id="menuTitle">App Component</span>
   
-  <a mat-button [routerLink]="['/cadastro-produto']" class="top-menu-item">Cadastro Produtos</a>
-  <a mat-button [routerLink]="['/lista-produto']" class="top-menu-item">Lista Produtos</a>
+  <button *ngIf="authService.isUserAuthenticated()" mat-button 
+  (click)="logout()">Logout</button>
+  
+  <a mat-button [routerLink]="['/home']" class="top-menu-item">Home</a>  
+  <a mat-button [routerLink]="['/produtos']" class="top-menu-item">Produtos</a>
   
 </mat-toolbar>
 
-<mat-sidenav-container>
+<mat-sidenav-container *ngIf="authService.isUserAuthenticated()">
   <!--opened significa que vai ficar sempre abberto-->
   <!--fixedInViewport: preenche todo o conteudo da tela-->
   <!--mode: side: empurra o conteudo-->
@@ -34,5 +40,6 @@
   </mat-sidenav-content>
 </mat-sidenav-container>
 
+<router-outlet *ngIf="!authService.isUserAuthenticated()"></router-outlet>
 
 <app-footer></app-footer>

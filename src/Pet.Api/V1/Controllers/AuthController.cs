@@ -94,6 +94,14 @@ namespace Pet.Api.V1.Controllers
             return CustomResponse(loginUser);
         }
 
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            // Simplesmente registrar o logout, se necessário.
+            _logger.LogInformation("Usuário fez logout.");
+            return NoContent();
+        }
+
         //private async Task<LoginResponseViewModel> GerarJwt(string email)//string email
         //private string GerarJwt()
         private async Task<LoginResponseViewModel> GerarJwt(string email)

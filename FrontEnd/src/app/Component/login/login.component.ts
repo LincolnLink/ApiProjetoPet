@@ -1,9 +1,9 @@
 import { Component, OnInit} from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { User } from '../../Module/user';
-import { LoginService } from '../../Service/loginService';
+import { AuthService } from '../../Service/authService';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: UntypedFormBuilder,
     private router: Router,
-    private loginService: LoginService) { }
+    private route: ActivatedRoute,
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.userForm = this.fb.group({
@@ -48,7 +49,7 @@ export class LoginComponent implements OnInit {
     if (this.userForm.valid && this.userForm.dirty) {
       let _user = Object.assign({}, this.user, this.userForm.value);
 
-      this.loginService.login(_user)
+      this.authService.login(_user)
         .subscribe({
           next: (response) => {
             this.onSaveComplete(response)
@@ -61,8 +62,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSaveComplete(response: any) {
-    this.loginService.persistirUserApp(response);
-    this.router.navigateByUrl('/lista-produtos');
+    console.log('Login bem-sucedido:', response);
+    this.authService.persistirUserApp(response);    
+    this.router.navigate(['/home']);
   }
 
   onError(fail: any) {

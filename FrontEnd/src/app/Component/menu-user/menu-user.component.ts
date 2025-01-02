@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { LoginService } from '../../Service/loginService';
+import { AuthService } from '../../Service/authService';
 
 @Component({
   selector: 'app-menu-user',
@@ -18,10 +18,10 @@ export class MenuUserComponent {
 
   saudacao: string = ""
 
-  constructor(private loginService: LoginService){}
+  constructor(private authService: AuthService){}
 
   userLogado(): boolean {
-    var user = this.loginService.obterUsuario();
+    var user = this.authService.obterUsuario();
     if (user) {
       this.saudacao = "Olá " + user.email;
       
