@@ -16,7 +16,13 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import('../app/Component/produto/produto.routes')
         .then(r => r.PRODUTO_ROUTES)
-    },    
+    },
+    {
+        path: 'fornecedores',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('../app/Component/fornecedor/fornecedor.routes')
+        .then(r => r.FORNECEDOR_ROUTES)
+    }, 
     {
         path: 'cadastro-usuario',        
         component: CadastroUsuarioComponent,

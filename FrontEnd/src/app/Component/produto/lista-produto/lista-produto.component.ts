@@ -8,6 +8,8 @@ import { MatTableModule } from '@angular/material/table';
 import { ProdutoService } from '../../../Service/produtoService';
 import { Produto } from '../../../Module/produto';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-lista-produto',
@@ -20,7 +22,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
     MatTableModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule,
+    MatToolbarModule
   ],
   templateUrl: './lista-produto.component.html',
   styleUrl: './lista-produto.component.css'

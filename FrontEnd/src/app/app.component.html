@@ -1,19 +1,23 @@
 
 <mat-toolbar *ngIf="authService.isUserAuthenticated()" class="mat-toolbar" color="primary">
-  <button *ngIf="authService.isUserAuthenticated()"
-   mat-icon-button (click)="sidenav.toggle()"
-   id="menuIcon" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
 
+  <button *ngIf="authService.isUserAuthenticated()" mat-icon-button (click)="sidenav.toggle()"
+  id="menuIcon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>  
   <span id="menuTitle">App Component</span>
-  
-  <button *ngIf="authService.isUserAuthenticated()" mat-button 
-  (click)="logout()">Logout</button>
-  
   <a mat-button [routerLink]="['/home']" class="top-menu-item">Home</a>  
   <a mat-button [routerLink]="['/produtos']" class="top-menu-item">Produtos</a>
+  <a mat-button [routerLink]="['/fornecedores']" class="top-menu-item">Fornecedores</a>
+
+  <span class="example-spacer"></span>
   
+  
+  <div style="float: right;">
+    <button *ngIf="authService.isUserAuthenticated()" mat-button 
+    (click)="logout()">Logout <mat-icon>logout</mat-icon></button>
+  </div>
+    
 </mat-toolbar>
 
 <mat-sidenav-container *ngIf="authService.isUserAuthenticated()">
@@ -25,11 +29,14 @@
   <mat-sidenav #sidenav [fixedInViewport]="true" [fixedTopGap]="60" mode="side">
      <div class="side-nav-items">
       <div>
-          <a (click)="sidenav.close()" mat-button [routerLink]="['/cadastro-produto']" class="side-menu-item"><mat-icon>home</mat-icon> Cadastro Produtos </a>
+          <a (click)="sidenav.close()" mat-button [routerLink]="['/home']" class="side-menu-item"><mat-icon>home</mat-icon> Home </a>
       </div>
       <div>
-          <a (click)="sidenav.close()" mat-button [routerLink]="['/lista-produto']" class="side-menu-item"><mat-icon>people</mat-icon> Lista Produtos </a>
+          <a (click)="sidenav.close()" mat-button [routerLink]="['/produtos']" class="side-menu-item"><mat-icon>people</mat-icon> Produtos </a>
       </div>
+      <div>
+        <a (click)="sidenav.close()" mat-button [routerLink]="['/fornecedores']" class="side-menu-item"><mat-icon>people</mat-icon> Fornecedores </a>
+    </div>
      </div>
   </mat-sidenav>
 

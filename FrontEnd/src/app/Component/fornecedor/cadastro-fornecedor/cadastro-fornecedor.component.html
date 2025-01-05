@@ -1,0 +1,95 @@
+<mat-card class="fornecedor-form-card">
+    <mat-card-title>Novo Fornecedor</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="cadastrarFornecedor()" [formGroup]="fornecedorForm">
+        
+        <!-- Erros -->
+        <mat-card-subtitle *ngIf="errors.length > 0" class="error-message">
+          <mat-icon>error</mat-icon>
+          <div *ngFor="let error of errors">{{ error }}</div>
+        </mat-card-subtitle>
+        
+        <!-- Nome -->
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" required maxlength="200" />
+          <mat-error *ngIf="fornecedorForm.get('nome')?.hasError('required')">Nome é obrigatório</mat-error>
+        </mat-form-field>
+        
+        <!-- Documento -->
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Documento</mat-label>
+          <input matInput formControlName="documento" required maxlength="20" />
+          <mat-error *ngIf="fornecedorForm.get('documento')?.hasError('required')">Documento é obrigatório</mat-error>
+        </mat-form-field>
+        
+        <!-- Tipo Fornecedor -->
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Tipo de Fornecedor</mat-label>
+          <mat-select formControlName="tipoFornecedor" required>
+            <mat-option [value]="'PessoaFisica'">Pessoa Física</mat-option>
+            <mat-option [value]="'PessoaJuridica'">Pessoa Jurídica</mat-option>
+          </mat-select>
+          <mat-error *ngIf="fornecedorForm.get('tipoFornecedor')?.hasError('required')">
+            Tipo de Fornecedor é obrigatório
+          </mat-error>
+        </mat-form-field>
+        
+        <!-- Endereço -->
+        <mat-card-subtitle>Endereço</mat-card-subtitle>
+        
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Logradouro</mat-label>
+          <input matInput formControlName="endereco.logradouro" required />
+          <mat-error *ngIf="fornecedorForm.get('endereco.logradouro')?.hasError('required')">Logradouro é obrigatório</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Número</mat-label>
+          <input matInput formControlName="endereco.numero" required />
+          <mat-error *ngIf="fornecedorForm.get('endereco.numero')?.hasError('required')">Número é obrigatório</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Complemento</mat-label>
+          <input matInput formControlName="endereco.complemento" />
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>CEP</mat-label>
+          <input matInput formControlName="endereco.cep" required maxlength="8" />
+          <mat-error *ngIf="fornecedorForm.get('endereco.cep')?.hasError('required')">CEP é obrigatório</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Bairro</mat-label>
+          <input matInput formControlName="endereco.bairro" required />
+          <mat-error *ngIf="fornecedorForm.get('endereco.bairro')?.hasError('required')">Bairro é obrigatório</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Cidade</mat-label>
+          <input matInput formControlName="endereco.cidade" required />
+          <mat-error *ngIf="fornecedorForm.get('endereco.cidade')?.hasError('required')">Cidade é obrigatória</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Estado</mat-label>
+          <input matInput formControlName="endereco.estado" required maxlength="2" />
+          <mat-error *ngIf="fornecedorForm.get('endereco.estado')?.hasError('required')">Estado é obrigatório</mat-error>
+        </mat-form-field>
+        
+        <!-- Ativo -->
+        <mat-checkbox formControlName="ativo">Ativo?</mat-checkbox>
+        
+        <!-- Botões -->
+        <div class="form-buttons">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!fornecedorForm.valid">
+            Cadastrar
+          </button>
+          <a mat-raised-button color="accent" [routerLink]="['/fornecedores']">Voltar</a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

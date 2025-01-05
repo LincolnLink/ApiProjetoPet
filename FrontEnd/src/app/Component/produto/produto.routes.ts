@@ -5,5 +5,6 @@ import { CadastroProdutoComponent } from './cadastro-produto/cadastro-produto.co
 
 export const PRODUTO_ROUTES: Routes = [
     {path: '', component: ListaProdutoComponent},
+    {path: 'novo', component: CadastroProdutoComponent},
     {path: ':id', component: CadastroProdutoComponent}
 ]

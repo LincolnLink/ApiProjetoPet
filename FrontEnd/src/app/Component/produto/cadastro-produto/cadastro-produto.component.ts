@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup } from '@angular/forms';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -46,12 +46,13 @@ export class CadastroProdutoComponent implements OnInit {
   imagemForm: any;
   imagemNome: string = "";
   imageBase64: any;
-
-  nomeImagem: string = ''; // Variável para armazenar o nome do arquivo
-   
+  nomeImagem: string = ''; // Variável para armazenar o nome do arquivo  
+  isEditing: boolean = false;
+  id: string | null = '';
 
   constructor(private fb: UntypedFormBuilder,
-              private router: Router,              
+              private router: Router,
+              private route: ActivatedRoute,
               private produtoService: ProdutoService) {
 
     this.produtoService.obterFornecedores()
@@ -83,6 +84,11 @@ export class CadastroProdutoComponent implements OnInit {
       valor: '0',
       ativo: new UntypedFormControl(false),
       nomeFornecedor: ''
+    });
+
+    this.route.paramMap.subscribe(params => {
+      this.id = params.get('id');
+      this.isEditing = !!this.id; // Se tiver ID, estamos editando
     });
   }
 

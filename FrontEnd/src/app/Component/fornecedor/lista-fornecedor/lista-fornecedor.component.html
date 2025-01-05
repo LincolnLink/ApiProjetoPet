@@ -1,0 +1,53 @@
+<main role="main" class="pb-3" style="display: flex; flex-direction: column; align-items: center;">
+    <h1>Lista de Fornecedores</h1>
+    <hr style="width: 100%; max-width: 800px;">
+  
+    <!-- Botão para novo cadastro -->
+    <p>
+      <button mat-raised-button color="primary" [routerLink]="['/fornecedores/novo']">
+        Novo Fornecedor
+      </button>
+    </p>
+  
+    <!-- Mensagem caso a lista esteja vazia -->
+    <div *ngIf="fornecedores.length === 0" class="empty-message">
+      <mat-icon>info</mat-icon>
+      <p>Nenhum fornecedor encontrado.</p>
+    </div>
+  
+    <!-- Tabela de fornecedores -->
+    <mat-table *ngIf="fornecedores.length > 0" [dataSource]="fornecedores" class="mat-elevation-z8" style="width: 100%; max-width: 800px;">
+      <!-- Nome -->
+      <ng-container matColumnDef="nome">
+        <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+        <mat-cell *matCellDef="let fornecedor"> {{ fornecedor.nome }} </mat-cell>
+      </ng-container>
+  
+      <!-- CNPJ -->
+      <ng-container matColumnDef="cnpj">
+        <mat-header-cell *matHeaderCellDef> CNPJ </mat-header-cell>
+        <mat-cell *matCellDef="let fornecedor"> {{ fornecedor.cnpj }} </mat-cell>
+      </ng-container>
+  
+      <!-- Endereço -->
+      <ng-container matColumnDef="endereco">
+        <mat-header-cell *matHeaderCellDef> Endereço </mat-header-cell>
+        <mat-cell *matCellDef="let fornecedor"> {{ fornecedor.endereco }} </mat-cell>
+      </ng-container>
+  
+      <!-- Ações -->
+      <ng-container matColumnDef="acoes">
+        <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+        <mat-cell *matCellDef="let fornecedor" style="text-align: right;">
+          <button mat-icon-button color="primary" [routerLink]="['/fornecedores', fornecedor.id]">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="accent"><mat-icon>delete</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </main>
+  

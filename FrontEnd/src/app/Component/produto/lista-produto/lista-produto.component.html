@@ -1,13 +1,33 @@
-<main role="main" class="pb-3" style="display: flex; flex-direction: column; align-items: center;">
+<div>
+  <mat-card class="card-titulo-page">    
+    <div class="card-body">
+      <div class="card-text">
+        <h2>Lista de Produtos</h2>
+      </div>
+      <div class="card-btns">
+        <button mat-raised-button color="accent"
+        class="card-btn" [routerLink]="['/produtos/novo']">Novo
+        </button>
+        <button mat-raised-button color="accent"
+        class="card-btn">Voltar
+        </button>
+      </div>
+      <!-- <button mat-icon-button class="card-btn">
+        <mat-icon>arrow_back</mat-icon>
+      </button> -->
+    </div>
+  </mat-card>
+  <div *ngIf="produtos.length === 0">
+    <div class="msnError">      
+      <mat-icon >info</mat-icon>           
+      <p>Nenhum produto encontrado.</p>
+    </div>     
+  </div>
+</div>
 
-    <h1>Lista de Produtos</h1>
-    <hr style="width: 100%; max-width: 800px;">
-  
-    <p>
-      <button mat-raised-button color="primary" [routerLink]="['/cadastro-produto']">Novo Produto</button>
-    </p>
-  
-    <mat-table [dataSource]="produtos" class="mat-elevation-z8" style="width: 100%; max-width: 800px;">
+<main role="main" class="pb-3" style="display: flex; flex-direction: column; align-items: center;">
+ 
+    <mat-table *ngIf="produtos.length > 0" [dataSource]="produtos" class="mat-elevation-z8" style="width: 100%; max-width: 800px;">
       <!-- Imagem -->
       <ng-container matColumnDef="imagem">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
@@ -46,7 +66,10 @@
       <ng-container matColumnDef="acoes">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let produto" style="text-align: right;">
-          <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+          <button mat-icon-button color="primary"
+          [routerLink]="['/produtos', produto.id]">
+            <mat-icon>edit</mat-icon>
+          </button>
           <button mat-icon-button color="accent"><mat-icon>delete</mat-icon></button>
           <button mat-icon-button><mat-icon>visibility</mat-icon></button>
         </mat-cell>
@@ -56,5 +79,5 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   
-  </main>
+</main>
   

@@ -1,61 +1,79 @@
-<mat-card class="product-form-card">
-  <h3 class="text-center">Novo Produto</h3>
-  <form (ngSubmit)="cadastrarProduto()" [formGroup]="produtoForm" enctype="multipart/form-data">
+<div *ngIf="fornecedores.length > 0; else emptyMessage">  
+  <mat-card class="product-form-card">
+    <mat-card-title>Novo Produto</mat-card-title>   
+    <mat-card-content>
+      <form (ngSubmit)="cadastrarProduto()" [formGroup]="produtoForm" enctype="multipart/form-data">
+      
+        <!-- Erros -->
+        <mat-card-subtitle *ngIf="errors.length > 0" class="error-message">
+          <mat-icon>error</mat-icon>
+          <div *ngFor="let error of errors">{{ error }}</div>
+        </mat-card-subtitle>
+
+        <!-- Fornecedor -->
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Fornecedor</mat-label>
+          <mat-select formControlName="fornecedorId" required>
+            <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">{{ fornecedor.nome }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="produtoForm.get('fornecedorId')?.hasError('required')">Fornecedor é obrigatório</mat-error>
+        </mat-form-field>
     
-    <!-- Erros -->
-    <mat-card-subtitle *ngIf="errors.length > 0" class="error-message">
-      <mat-icon>error</mat-icon>
-      <div *ngFor="let error of errors">{{ error }}</div>
-    </mat-card-subtitle>
+        <!-- Nome -->
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Nome</mat-label>
+          <input matInput formControlName="nome" required maxlength="200" />
+          <mat-error *ngIf="produtoForm.get('nome')?.hasError('required')">Nome é obrigatório</mat-error>
+        </mat-form-field>
+    
+        <!-- Descrição -->
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Descrição</mat-label>
+          <textarea matInput formControlName="descricao" required maxlength="1000"></textarea>
+          <mat-error *ngIf="produtoForm.get('descricao')?.hasError('required')">Descrição é obrigatória</mat-error>
+        </mat-form-field>
+    
+        <!-- Imagem -->
+        <div class="form-field" style="margin: 1em;">
+          <mat-label>{{ nomeImagem || 'Imagem do Produto' }}</mat-label>
+          <!-- Botão de upload personalizado -->
+          <button mat-raised-button color="primary" (click)="fileInput.click()" style="margin: 2em;">
+            Selecionar Imagem
+            <input #fileInput type="file" accept="image/*" (change)="upload($event)" style="display: none" />
+          </button>
+          <mat-error *ngIf="produtoForm.get('imagemUpload')?.hasError('required')">Imagem é obrigatória</mat-error>
+        </div>
+    
+        <!-- Valor -->
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Valor</mat-label>
+          <input matInput formControlName="valor" type="text" required />
+          <mat-error *ngIf="produtoForm.get('valor')?.hasError('required')">Valor é obrigatório</mat-error>
+        </mat-form-field>
+    
+        <!-- Ativo -->
+        <mat-checkbox formControlName="ativo">Ativo?</mat-checkbox>
+    
+        <!-- Botões -->
+        <div class="form-buttons">
+          <button mat-raised-button color="primary" type="submit" [disabled]="!produtoForm.valid">Cadastrar</button>
+          <a mat-raised-button color="accent" [routerLink]="['/produtos']">Voltar</a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
 
-    <!-- Fornecedor -->
-    <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Fornecedor</mat-label>
-      <mat-select formControlName="fornecedorId" required>
-        <mat-option *ngFor="let fornecedor of fornecedores" [value]="fornecedor.id">{{ fornecedor.nome }}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="produtoForm.get('fornecedorId')?.hasError('required')">Fornecedor é obrigatório</mat-error>
-    </mat-form-field>
+<ng-template #emptyMessage>
+  <mat-card class="empty-card">
+    <mat-card-header>
+      <mat-icon>info</mat-icon>
+      <mat-card-title>Nenhum fornecedor encontrado</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Por favor, adicione um fornecedor para cadastrar um produto.</p>
+    </mat-card-content>
+  </mat-card>
+</ng-template>
 
-    <!-- Nome -->
-    <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Nome</mat-label>
-      <input matInput formControlName="nome" required maxlength="200" />
-      <mat-error *ngIf="produtoForm.get('nome')?.hasError('required')">Nome é obrigatório</mat-error>
-    </mat-form-field>
 
-    <!-- Descrição -->
-    <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Descrição</mat-label>
-      <textarea matInput formControlName="descricao" required maxlength="1000"></textarea>
-      <mat-error *ngIf="produtoForm.get('descricao')?.hasError('required')">Descrição é obrigatória</mat-error>
-    </mat-form-field>
-
-    <!-- Imagem -->
-    <div class="form-field" style="margin: 1em;">
-      <mat-label>{{ nomeImagem || 'Imagem do Produto' }}</mat-label>
-      <!-- Botão de upload personalizado -->
-      <button mat-raised-button color="primary" (click)="fileInput.click()" style="margin: 2em;">
-        Selecionar Imagem
-        <input #fileInput type="file" accept="image/*" (change)="upload($event)" style="display: none" />
-      </button>
-      <mat-error *ngIf="produtoForm.get('imagemUpload')?.hasError('required')">Imagem é obrigatória</mat-error>
-    </div>
-
-    <!-- Valor -->
-    <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Valor</mat-label>
-      <input matInput formControlName="valor" type="text" required />
-      <mat-error *ngIf="produtoForm.get('valor')?.hasError('required')">Valor é obrigatório</mat-error>
-    </mat-form-field>
-
-    <!-- Ativo -->
-    <mat-checkbox formControlName="ativo">Ativo?</mat-checkbox>
-
-    <!-- Botões -->
-    <div class="form-buttons">
-      <button mat-raised-button color="primary" type="submit" [disabled]="!produtoForm.valid">Cadastrar</button>
-      <a mat-raised-button color="accent" [routerLink]="['/lista-produtos']">Voltar</a>
-    </div>
-  </form>
-</mat-card>
