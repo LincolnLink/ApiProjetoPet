@@ -1,10 +1,15 @@
-﻿using Dev.Business.Notificacoes;
+﻿using Dev.Domain.Notificacoes;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Dev.Business.Interfaces
+namespace Dev.Domain.Interfaces
 {
     public interface INotificador
     {
+
         /// <summary>
         /// Retorna se existe notificações na lista.
         /// </summary> 

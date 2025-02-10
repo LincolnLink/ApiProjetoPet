@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Dev.Business.Interfaces;
-using Dev.Business.Notificacoes;
+using Dev.Domain.Interfaces;
+using Dev.Domain.Notificacoes;
 
 namespace Pet.Api.Controllers
 {

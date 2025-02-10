@@ -1,4 +1,4 @@
-﻿using Dev.Business.Interfaces;
+﻿using Dev.Domain.Interfaces;
 using System.Security.Claims;
 
 namespace Pet.Api.Extensions

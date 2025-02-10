@@ -1,6 +1,11 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Dev.Business.Interfaces
+namespace Dev.Domain.Interfaces
 {
     public interface IUser
     {
@@ -21,5 +26,6 @@ namespace Dev.Business.Interfaces
 
         /// <summary>Retorna uma lista de Claim </summary>
         IEnumerable<Claim> GetClaimsIdentity();
+
     }
 }

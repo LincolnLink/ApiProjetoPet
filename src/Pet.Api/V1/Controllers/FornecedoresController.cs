@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Dev.Business.Interfaces;
+using Dev.Domain.Interfaces;
+using DevIO.Api.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,19 +15,19 @@ namespace Pet.Api.V1.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IFornecedorService _fornecedorService;
-        private readonly IEnderecoRepository _enderecoRepository;
+        //private readonly IEnderecoRepository _enderecoRepository;
         private readonly IFornecedorRepository _fornecedorRepository;
 
         public FornecedoresController(
             IMapper mapper, IUser user,
             INotificador notificador,
             IFornecedorService fornecedorService,
-            IEnderecoRepository enderecoRepository,
+            //IEnderecoRepository enderecoRepository,
             IFornecedorRepository fornecedorRepository) : base(notificador, user)
         {
             _mapper = mapper;
             _fornecedorService = fornecedorService;
-            _enderecoRepository = enderecoRepository;
+            //_enderecoRepository = enderecoRepository;
             _fornecedorRepository = fornecedorRepository;
         }
 

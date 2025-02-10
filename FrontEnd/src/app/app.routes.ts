@@ -24,9 +24,8 @@ export const routes: Routes = [
         .then(r => r.FORNECEDOR_ROUTES)
     }, 
     {
-        path: 'cadastro-usuario',        
-        component: CadastroUsuarioComponent,
-        canActivate: [AuthGuard],
+        path: 'cadastro-usuario',
+        component: CadastroUsuarioComponent,        
     },
     {path: '', redirectTo:'login', pathMatch: 'full' },
     {path: '**', redirectTo:'login', pathMatch: 'full' }
