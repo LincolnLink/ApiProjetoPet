@@ -26,15 +26,8 @@ docker start -a <nome-do-container>
 
  - comando para executar backend e frontend
 
+# Comando para rodar o docker-compose
+
 docker-compose up pet.frontend.dev
 docker-compose up -d pet.api
-
-
-
-
-
-
-
-
-
 

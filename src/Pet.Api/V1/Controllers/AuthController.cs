@@ -76,6 +76,13 @@ namespace Pet.Api.V1.Controllers
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
+            // verificando se está pegando a configuração de login
+            if (_appSettings == null || string.IsNullOrEmpty(_appSettings.Secret) || string.IsNullOrEmpty(_appSettings.Emissor))
+            {
+                _logger.LogError("Configurações de AppSettings inválidas. Verifique o arquivo de configuração.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Configuração inválida.");
+            }
+
             var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);
 
             if (result.Succeeded)
