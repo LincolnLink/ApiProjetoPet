@@ -31,3 +31,43 @@ docker start -a <nome-do-container>
 docker-compose up pet.frontend.dev
 docker-compose up -d pet.api
 
+# Comando do entityframework.
+
+ - deve executar o comando com o docker-desktop fechado.
+
+dotnet ef migrations add primeiroBuild --context MeuDbContext
+
+dotnet ef database update
+
+# deve se criar um classe chamada fabrica de contexto, alem do dbcontext. 
+
+<blockquete>
+
+        public class MeuDbContextFactory : IDesignTimeDbContextFactory<MeuDbContext>
+        {
+            public MeuDbContext CreateDbContext(string[] args)
+            {
+                var config = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true)
+                    .Build();
+
+                var optionsBuilder = new DbContextOptionsBuilder<MeuDbContext>();
+                optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+
+                return new MeuDbContext(optionsBuilder.Options);
+            }
+        }
+
+
+</blockquete>
+
+
+ # Passando valor para variavel de ambiente e consultando o valor no powershell
+
+$env:ASPNETCORE_ENVIRONMENT="Local"
+
+$env:ASPNETCORE_ENVIRONMENT 
+
+
+

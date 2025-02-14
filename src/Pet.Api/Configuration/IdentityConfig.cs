@@ -26,11 +26,14 @@ namespace Pet.Api.Configuration
                 .AddDefaultTokenProviders()
                 .AddErrorDescriber<IdentityMensagensPortugues>();
 
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            Console.WriteLine($"Connection String: {connectionString}");
+
             // JWT
             // Congifura a classe com o json, já está populando a classe.
             var appSettingsSection = configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-
+            
             // Pegando os dados da classe "AppSettings".
             // Definindo a chave baseado no segredo, fazendo Encoding.
             var appSettings = appSettingsSection.Get<AppSettings>();

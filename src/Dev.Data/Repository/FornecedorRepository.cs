@@ -16,19 +16,18 @@ namespace Dev.Data.Repository
         public FornecedorRepository(MeuDbContext context) : base(context) { }
 
 
-        //public async Task<Fornecedor> ObterFornecedorEndereco(Guid id)
-        //{
-        //    return await Db.Fornecedores.AsNoTracking()
-        //        .Include(f => f.Endereco)
-        //        .FirstOrDefaultAsync(e => e.Id == id);
-        //}
+        public async Task<Fornecedor> ObterFornecedorPorId(Guid id)
+        {
+            return await Db.Fornecedores.AsNoTracking()                
+                .FirstOrDefaultAsync(f => f.Id == id);
+        }
 
-        public async Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id)
+        public async Task<Fornecedor> ObterFornecedorPorIdProdutos(Guid id)
         {
             // Retorna o fornecedor com os produtos dele e o endereço dele.
             return await Db.Fornecedores.AsNoTracking()
-                .Include(c => c.Produtos)
-                .FirstOrDefaultAsync(c => c.Id == id);
+                .Include(p => p.Produtos)
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             //.Include(c => c.Endereco)
         }

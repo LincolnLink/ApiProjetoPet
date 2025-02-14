@@ -10,11 +10,6 @@ namespace Dev.Data.Context
 {
     public class MeuDbContext : DbContext
     {
-        public MeuDbContext()
-        {
-
-        }
-
         public MeuDbContext(DbContextOptions<MeuDbContext> options) : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
@@ -23,11 +18,7 @@ namespace Dev.Data.Context
 
         public DbSet<Produto> Produtos { get; set; }
 
-        //public DbSet<Endereco> Enderecos { get; set; }
-
         public DbSet<Fornecedor> Fornecedores { get; set; }
-
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,7 +40,5 @@ namespace Dev.Data.Context
 
             base.OnModelCreating(modelBuilder);
         }
-
-
     }
 }

@@ -63,7 +63,7 @@ namespace Dev.Business.Services
         public async Task<bool> Remover(Guid id)
         {
             // Caso o fornecedor tenha produtos, não será excluido.
-            if (_fornecedorRepository.ObterFornecedorProdutosEndereco(id).Result.Produtos.Any())
+            if (_fornecedorRepository.ObterFornecedorPorIdProdutos(id).Result.Produtos.Any())
             {
                 Notificar(mensagem: "O fornecedor possui produtos cadastrados!");
                 return false;

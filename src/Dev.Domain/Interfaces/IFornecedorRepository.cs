@@ -9,8 +9,8 @@ namespace Dev.Domain.Interfaces
 {
     public interface IFornecedorRepository : IRepository<Fornecedor>
     {
-        //Task<Fornecedor> ObterFornecedorEndereco(Guid id);
+        Task<Fornecedor> ObterFornecedorPorId(Guid id);
 
-        Task<Fornecedor> ObterFornecedorProdutosEndereco(Guid id);
+        Task<Fornecedor> ObterFornecedorPorIdProdutos(Guid id);
     }
 }

@@ -3,6 +3,7 @@ using Pet.Api.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
+using Dev.Data.Context;
 
 namespace Pet.Api
 {
@@ -18,7 +19,7 @@ namespace Pet.Api
             builder.Configuration
                 .SetBasePath(builder.Environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
             if (builder.Environment.IsDevelopment())
@@ -41,12 +42,12 @@ namespace Pet.Api
         {
             var services = builder.Services;
 
-            //services.AddDbContext<MeuDbContext>(options =>
-            //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<MeuDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentityConfig(builder.Configuration);
 
-            //services.AddAutoMapper(typeof(Program));
+            services.AddAutoMapper(typeof(Program));
             services.AddApiConfig();
             services.AddSwaggerConfig();            
             services.ResolveDependencies();
