@@ -27,6 +27,11 @@ namespace Pet.Api
                 builder.Configuration.AddUserSecrets<Program>();
             }
 
+            if (builder.Environment.IsEnvironment("Local"))
+            {
+                builder.Configuration.AddUserSecrets<Program>();
+            }
+
             // Configura serviços
             ConfigureServices(builder);
 
@@ -58,6 +63,12 @@ namespace Pet.Api
             var env = app.Environment;
 
             if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+            if (env.IsEnvironment("Local"))
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();

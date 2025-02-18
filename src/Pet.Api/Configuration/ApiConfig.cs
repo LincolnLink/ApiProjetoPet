@@ -37,6 +37,11 @@ namespace Pet.Api.Configuration
                            .AllowAnyMethod()
                            .AllowAnyHeader());
 
+                options.AddPolicy("Local", builder =>
+                    builder.AllowAnyOrigin()
+                           .AllowAnyMethod()
+                           .AllowAnyHeader());
+
                 options.AddPolicy("Production", builder =>
                     builder.WithMethods("GET")
                            .WithOrigins("http://desenvolvedor.io")
@@ -54,6 +59,10 @@ namespace Pet.Api.Configuration
             if (env.IsDevelopment())
             {
                 app.UseCors("Development");
+            }
+            if (env.IsEnvironment("Local"))
+            {
+                app.UseCors("Local");
             }
             else
             {
